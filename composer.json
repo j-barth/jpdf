@@ -1,5 +1,5 @@
 {
-  "name": "jbarthes/jpdf",
+  "name": "jbarth/jpdf",
   "homepage": "http://www.fpdf.org",
   "description": "This project is based on FPDF. The goal here is to create an easily usable library with composer from this base.",
   "autoload": {
