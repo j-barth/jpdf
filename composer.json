@@ -4,7 +4,7 @@
   "description": "This project is based on FPDF. The goal here is to create an easily usable library with composer from this base.",
   "autoload": {
     "psr-4": {
-      "Jbarth\\": "/"
+      "Jbarth\\": "/src"
     }
   },
   "type": "library",

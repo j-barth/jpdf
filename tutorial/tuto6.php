@@ -1,7 +1,10 @@
 <?php
-require('../fpdf.php');
+require_once '../vendor/autoload.php';
+$classLoader = new \Composer\Autoload\ClassLoader();
+$classLoader->addPsr4('Jbarth\\', __DIR__ . '/../src');
+$classLoader->register();
 
-class PDF extends FPDF
+class PDF extends Jbarth\Fpdf
 {
 protected $B = 0;
 protected $I = 0;
