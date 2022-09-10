@@ -8,14 +8,14 @@ FPDF is a PHP class which allows to generate PDF files with pure PHP. F from FPD
 
 If you're using Composer to manage dependencies, you can use
 
-    $ composer require jbarth/fpdf
+    $ composer require jbarth/jpdf
 
 or you can include the following in your composer.json file:
 
 ```json
 {
     "require": {
-        "jbarth/fpdf": "^1.8"
+        "jbarth/jpdf": "^1.0"
     }
 }
 ```
