@@ -8,6 +8,11 @@
     }
   },
   "type": "library",
+  "keywords": [
+    "pdf",
+    "fpdf",
+    "jpdf"
+  ],
   "license": "MIT",
   "authors": [
     {
@@ -15,5 +20,7 @@
       "email": "jerome.barthes@gmail.com"
     }
   ],
-  "require": {}
+  "require": {
+        "php": "^7.2"
+  }
 }
