@@ -70,9 +70,6 @@ class Fpdf
     protected $metadata;           // document properties
     protected $PDFVersion;         // PDF version number
 
-    /*******************************************************************************
-     *                               Public methods                                 *
-     *******************************************************************************/
     function __construct($orientation = 'P', $unit = 'mm', $size = 'A4')
     {
         // Some checks
@@ -115,13 +112,13 @@ class Fpdf
         // Core fonts
         $this->CoreFonts = array('courier', 'helvetica', 'times', 'symbol', 'zapfdingbats');
         // Scale factor
-        if ($unit == 'pt')
+        if ($unit == PdfFormatEnum::UNIT_PT)
             $this->k = 1;
-        elseif ($unit == 'mm')
+        elseif ($unit == PdfFormatEnum::UNIT_MM)
             $this->k = 72 / 25.4;
-        elseif ($unit == 'cm')
+        elseif ($unit == PdfFormatEnum::UNIT_CM)
             $this->k = 72 / 2.54;
-        elseif ($unit == 'in')
+        elseif ($unit == PdfFormatEnum::UNIT_IN)
             $this->k = 72;
         else
             $this->Error('Incorrect unit: ' . $unit);
