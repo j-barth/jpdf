@@ -1,6 +1,7 @@
 <?php
 namespace Tests;
 
+use Jbarth\PageSize;
 use PHPUnit\Framework\TestCase;
 
 class ContructorTest extends TestCase
@@ -43,43 +44,57 @@ class ContructorTest extends TestCase
         $actualCoreFonts = $fpdf->getParam('CoreFonts');
         $this->assertEquals($expectedCoreFonts, $actualCoreFonts);
 
-        $excpectedK = 72 / 25.4;
-
-        $this->assertEquals($excpectedK, $fpdf->getParam('k'));
-
         $stdPageSizes = array('a3' => array(841.89, 1190.55), 'a4' => array(595.28, 841.89), 'a5' => array(420.94, 595.28),
             'letter' => array(612, 792), 'legal' => array(612, 1008));
         $this->assertEquals($stdPageSizes, $fpdf->getParam('StdPageSizes'));
 
-        $pageSize = $stdPageSizes['a4'];
-        $expectedSize = array_map(function(float $size) use($excpectedK): float { return $size / $excpectedK; }, $pageSize);
-        $this->assertEquals($expectedSize, $fpdf->getParam('DefPageSize'));
-        $this->assertEquals($expectedSize, $fpdf->getParam('CurPageSize'));
+        $expectedPageSize = new PageSize();
 
-        $this->assertEquals('P', $fpdf->getParam('DefOrientation'));
-        $this->assertEquals($expectedSize[0], $fpdf->getParam('w'));
-        $this->assertEquals($expectedSize[1], $fpdf->getParam('h'));
-        $this->assertEquals('P', $fpdf->getParam('CurOrientation'));
-        $this->assertEquals($pageSize[0], $fpdf->getParam('wPt'));
-        $this->assertEquals($pageSize[1], $fpdf->getParam('hPt'));
-        $this->assertEquals(0, $fpdf->getParam('CurRotation'));
 
-        $excpectedMargin = 28.35 / $excpectedK;
-        $this->assertEquals($excpectedMargin, $fpdf->getParam('lMargin'));
-        $this->assertEquals($excpectedMargin, $fpdf->getParam('tMargin'));
-        $this->assertEquals($excpectedMargin, $fpdf->getParam('rMargin'));
-        $this->assertEquals($excpectedMargin / 10, $fpdf->getParam('cMargin'));
+        $this->assertEquals($expectedPageSize->getK(), $fpdf->getParam('k'));
 
-        $this->assertEquals(.567  / $excpectedK, $fpdf->getParam('LineWidth'));
+        $this->assertEquals($expectedPageSize->getPageSize(), $fpdf->getParam('DefPageSize'));
+        $this->assertEquals($expectedPageSize->getPageSize(), $fpdf->getParam('CurPageSize'));
+
+        $this->assertEquals($expectedPageSize->getOrientation(), $fpdf->getParam('DefOrientation'));
+        $this->assertEquals($expectedPageSize->getWidth(), $fpdf->getParam('w'));
+        $this->assertEquals($expectedPageSize->getHeight(), $fpdf->getParam('h'));
+        $this->assertEquals($expectedPageSize->getOrientation(), $fpdf->getParam('CurOrientation'));
+        $this->assertEquals($expectedPageSize->getWidthAsPt(), $fpdf->getParam('wPt'));
+        $this->assertEquals($expectedPageSize->getHeightAsPt(), $fpdf->getParam('hPt'));
+        $this->assertEquals($expectedPageSize->getRotation(), $fpdf->getParam('CurRotation'));
+
+        $this->assertEquals($expectedPageSize->getMarginLeft(), $fpdf->getParam('lMargin'));
+        $this->assertEquals($expectedPageSize->getMarginTop(), $fpdf->getParam('tMargin'));
+        $this->assertEquals($expectedPageSize->getMarginRight(), $fpdf->getParam('rMargin'));
+        $this->assertEquals($expectedPageSize->getMarginBottom(), $fpdf->getParam('bMargin'));
+
+        $excpectedCMargin = (28.35 / $expectedPageSize->getK()) / 10;
+        $this->assertEquals($excpectedCMargin, $fpdf->getParam('cMargin'));
+
+        $this->assertEquals(.567  / $expectedPageSize->getK(), $fpdf->getParam('LineWidth'));
 
         $this->assertTrue($fpdf->getParam('AutoPageBreak'));
-        $this->assertEquals($excpectedMargin * 2, $fpdf->getParam('bMargin'));
-        $this->assertEquals($expectedSize[1] - ($excpectedMargin * 2), $fpdf->getParam('PageBreakTrigger'));
+        $this->assertEquals($expectedPageSize->getHeight() - $expectedPageSize->getMarginBottom(), $fpdf->getParam('PageBreakTrigger'));
 
         $this->assertEquals('default', $fpdf->getParam('ZoomMode'));
         $this->assertEquals('default', $fpdf->getParam('LayoutMode'));
         $this->assertTrue($fpdf->getParam('compress'));
         $this->assertEquals('1.3', $fpdf->getParam('PDFVersion'));
+    }
+
+    public function testConstructorLandscape()
+    {
+        $fpdf = new TestableFpdf('L');
+        $expectedPageSize = new PageSize('L');
+        $this->assertEquals($expectedPageSize->getOrientation(), $fpdf->getParam('DefOrientation'));
+        $this->assertEquals($expectedPageSize->getWidth(), $fpdf->getParam('w'));
+        $this->assertEquals($expectedPageSize->getHeight(), $fpdf->getParam('h'));
+        $this->assertEquals($expectedPageSize->getOrientation(), $fpdf->getParam('CurOrientation'));
+        $this->assertEquals($expectedPageSize->getWidthAsPt(), $fpdf->getParam('wPt'));
+        $this->assertEquals($expectedPageSize->getHeightAsPt(), $fpdf->getParam('hPt'));
+        $this->assertEquals($expectedPageSize->getHeight() - $expectedPageSize->getMarginBottom(), $fpdf->getParam('PageBreakTrigger'));
+
     }
 }
 
