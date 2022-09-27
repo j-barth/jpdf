@@ -2,6 +2,7 @@
 namespace Tests;
 
 use Jbarth\PageSize;
+use Jbarth\PdfFormatEnum;
 use PHPUnit\Framework\TestCase;
 
 class ContructorTest extends TestCase
@@ -91,6 +92,142 @@ class ContructorTest extends TestCase
         $this->assertEquals($expectedPageSize->getWidth(), $fpdf->getParam('w'));
         $this->assertEquals($expectedPageSize->getHeight(), $fpdf->getParam('h'));
         $this->assertEquals($expectedPageSize->getOrientation(), $fpdf->getParam('CurOrientation'));
+        $this->assertEquals($expectedPageSize->getWidthAsPt(), $fpdf->getParam('wPt'));
+        $this->assertEquals($expectedPageSize->getHeightAsPt(), $fpdf->getParam('hPt'));
+        $this->assertEquals($expectedPageSize->getHeight() - $expectedPageSize->getMarginBottom(), $fpdf->getParam('PageBreakTrigger'));
+
+    }
+
+    public function testConstructorUnitK()
+    {
+        $fpdf = new TestableFpdf('P', PdfFormatEnum::UNIT_CM);
+        $expectedPageSize = new PageSize('P', PdfFormatEnum::UNIT_CM);
+        $this->assertEquals($expectedPageSize->getK(), $fpdf->getParam('k'), 'error on k');
+        $this->assertEquals($expectedPageSize->getPageSize(), $fpdf->getParam('DefPageSize'));
+        $this->assertEquals($expectedPageSize->getPageSize(), $fpdf->getParam('CurPageSize'));
+        $this->assertEquals($expectedPageSize->getWidth(), $fpdf->getParam('w'));
+        $this->assertEquals($expectedPageSize->getHeight(), $fpdf->getParam('h'));
+        $this->assertEquals($expectedPageSize->getMarginLeft(), $fpdf->getParam('lMargin'));
+        $this->assertEquals($expectedPageSize->getMarginTop(), $fpdf->getParam('tMargin'));
+        $this->assertEquals($expectedPageSize->getMarginRight(), $fpdf->getParam('rMargin'));
+        $this->assertEquals($expectedPageSize->getMarginBottom(), $fpdf->getParam('bMargin'));
+        $excpectedCMargin = (28.35 / $expectedPageSize->getK()) / 10;
+        $this->assertEquals($excpectedCMargin, $fpdf->getParam('cMargin'));
+        $this->assertEquals(.567  / $expectedPageSize->getK(), $fpdf->getParam('LineWidth'));
+        $this->assertEquals($expectedPageSize->getHeight() - $expectedPageSize->getMarginBottom(), $fpdf->getParam('PageBreakTrigger'));
+
+        $fpdf = new TestableFpdf('L', PdfFormatEnum::UNIT_CM);
+        $expectedPageSize = new PageSize('L', PdfFormatEnum::UNIT_CM);
+        $this->assertEquals($expectedPageSize->getWidth(), $fpdf->getParam('w'));
+        $this->assertEquals($expectedPageSize->getHeight(), $fpdf->getParam('h'));
+        $this->assertEquals($expectedPageSize->getHeight() - $expectedPageSize->getMarginBottom(), $fpdf->getParam('PageBreakTrigger'));
+
+        $fpdf = new TestableFpdf('P', PdfFormatEnum::UNIT_IN);
+        $expectedPageSize = new PageSize('P', PdfFormatEnum::UNIT_IN);
+        $this->assertEquals($expectedPageSize->getK(), $fpdf->getParam('k'), 'error on k');
+        $this->assertEquals($expectedPageSize->getPageSize(), $fpdf->getParam('DefPageSize'));
+        $this->assertEquals($expectedPageSize->getPageSize(), $fpdf->getParam('CurPageSize'));
+        $this->assertEquals($expectedPageSize->getWidth(), $fpdf->getParam('w'));
+        $this->assertEquals($expectedPageSize->getHeight(), $fpdf->getParam('h'));
+        $this->assertEquals($expectedPageSize->getMarginLeft(), $fpdf->getParam('lMargin'));
+        $this->assertEquals($expectedPageSize->getMarginTop(), $fpdf->getParam('tMargin'));
+        $this->assertEquals($expectedPageSize->getMarginRight(), $fpdf->getParam('rMargin'));
+        $this->assertEquals($expectedPageSize->getMarginBottom(), $fpdf->getParam('bMargin'));
+        $excpectedCMargin = (28.35 / $expectedPageSize->getK()) / 10;
+        $this->assertEquals($excpectedCMargin, $fpdf->getParam('cMargin'));
+        $this->assertEquals(.567  / $expectedPageSize->getK(), $fpdf->getParam('LineWidth'));
+        $this->assertEquals($expectedPageSize->getHeight() - $expectedPageSize->getMarginBottom(), $fpdf->getParam('PageBreakTrigger'));
+
+        $fpdf = new TestableFpdf('L', PdfFormatEnum::UNIT_IN);
+        $expectedPageSize = new PageSize('L', PdfFormatEnum::UNIT_IN);
+        $this->assertEquals($expectedPageSize->getWidth(), $fpdf->getParam('w'));
+        $this->assertEquals($expectedPageSize->getHeight(), $fpdf->getParam('h'));
+        $this->assertEquals($expectedPageSize->getHeight() - $expectedPageSize->getMarginBottom(), $fpdf->getParam('PageBreakTrigger'));
+
+        $fpdf = new TestableFpdf('P', PdfFormatEnum::UNIT_PT);
+        $expectedPageSize = new PageSize('P', PdfFormatEnum::UNIT_PT);
+        $this->assertEquals($expectedPageSize->getK(), $fpdf->getParam('k'), 'error on k');
+        $this->assertEquals($expectedPageSize->getPageSize(), $fpdf->getParam('DefPageSize'));
+        $this->assertEquals($expectedPageSize->getPageSize(), $fpdf->getParam('CurPageSize'));
+        $this->assertEquals($expectedPageSize->getWidth(), $fpdf->getParam('w'));
+        $this->assertEquals($expectedPageSize->getHeight(), $fpdf->getParam('h'));
+        $this->assertEquals($expectedPageSize->getMarginLeft(), $fpdf->getParam('lMargin'));
+        $this->assertEquals($expectedPageSize->getMarginTop(), $fpdf->getParam('tMargin'));
+        $this->assertEquals($expectedPageSize->getMarginRight(), $fpdf->getParam('rMargin'));
+        $this->assertEquals($expectedPageSize->getMarginBottom(), $fpdf->getParam('bMargin'));
+        $excpectedCMargin = (28.35 / $expectedPageSize->getK()) / 10;
+        $this->assertEquals($excpectedCMargin, $fpdf->getParam('cMargin'));
+        $this->assertEquals(.567  / $expectedPageSize->getK(), $fpdf->getParam('LineWidth'));
+        $this->assertEquals($expectedPageSize->getHeight() - $expectedPageSize->getMarginBottom(), $fpdf->getParam('PageBreakTrigger'));
+
+        $fpdf = new TestableFpdf('L', PdfFormatEnum::UNIT_PT);
+        $expectedPageSize = new PageSize('L', PdfFormatEnum::UNIT_PT);
+        $this->assertEquals($expectedPageSize->getWidth(), $fpdf->getParam('w'));
+        $this->assertEquals($expectedPageSize->getHeight(), $fpdf->getParam('h'));
+        $this->assertEquals($expectedPageSize->getHeight() - $expectedPageSize->getMarginBottom(), $fpdf->getParam('PageBreakTrigger'));
+
+        $fpdf = new TestableFpdf('P', PdfFormatEnum::UNIT_MM);
+        $expectedPageSize = new PageSize('P', PdfFormatEnum::UNIT_MM);
+        $this->assertEquals($expectedPageSize->getK(), $fpdf->getParam('k'), 'error on k');
+        $this->assertEquals($expectedPageSize->getPageSize(), $fpdf->getParam('DefPageSize'));
+        $this->assertEquals($expectedPageSize->getPageSize(), $fpdf->getParam('CurPageSize'));
+        $this->assertEquals($expectedPageSize->getWidth(), $fpdf->getParam('w'));
+        $this->assertEquals($expectedPageSize->getHeight(), $fpdf->getParam('h'));
+        $this->assertEquals($expectedPageSize->getMarginLeft(), $fpdf->getParam('lMargin'));
+        $this->assertEquals($expectedPageSize->getMarginTop(), $fpdf->getParam('tMargin'));
+        $this->assertEquals($expectedPageSize->getMarginRight(), $fpdf->getParam('rMargin'));
+        $this->assertEquals($expectedPageSize->getMarginBottom(), $fpdf->getParam('bMargin'));
+        $excpectedCMargin = (28.35 / $expectedPageSize->getK()) / 10;
+        $this->assertEquals($excpectedCMargin, $fpdf->getParam('cMargin'));
+        $this->assertEquals(.567  / $expectedPageSize->getK(), $fpdf->getParam('LineWidth'));
+        $this->assertEquals($expectedPageSize->getHeight() - $expectedPageSize->getMarginBottom(), $fpdf->getParam('PageBreakTrigger'));
+
+        $fpdf = new TestableFpdf('L', PdfFormatEnum::UNIT_MM);
+        $expectedPageSize = new PageSize('L', PdfFormatEnum::UNIT_MM);
+        $this->assertEquals($expectedPageSize->getWidth(), $fpdf->getParam('w'));
+        $this->assertEquals($expectedPageSize->getHeight(), $fpdf->getParam('h'));
+        $this->assertEquals($expectedPageSize->getHeight() - $expectedPageSize->getMarginBottom(), $fpdf->getParam('PageBreakTrigger'));
+    }
+
+
+    public function testConstructorPageSize()
+    {
+        $fpdf = new TestableFpdf('P', PdfFormatEnum::UNIT_MM, 'A3');
+        $expectedPageSize = new PageSize('P', PdfFormatEnum::UNIT_MM, 'A3');
+        $this->assertEquals($expectedPageSize->getPageSize(), $fpdf->getParam('DefPageSize'));
+        $this->assertEquals($expectedPageSize->getPageSize(), $fpdf->getParam('CurPageSize'));
+        $this->assertEquals($expectedPageSize->getWidth(), $fpdf->getParam('w'));
+        $this->assertEquals($expectedPageSize->getHeight(), $fpdf->getParam('h'));
+        $this->assertEquals($expectedPageSize->getWidthAsPt(), $fpdf->getParam('wPt'));
+        $this->assertEquals($expectedPageSize->getHeightAsPt(), $fpdf->getParam('hPt'));
+        $this->assertEquals($expectedPageSize->getHeight() - $expectedPageSize->getMarginBottom(), $fpdf->getParam('PageBreakTrigger'));
+
+        $fpdf = new TestableFpdf('P', PdfFormatEnum::UNIT_MM, 'A5');
+        $expectedPageSize = new PageSize('P', PdfFormatEnum::UNIT_MM, 'A5');
+        $this->assertEquals($expectedPageSize->getPageSize(), $fpdf->getParam('DefPageSize'));
+        $this->assertEquals($expectedPageSize->getPageSize(), $fpdf->getParam('CurPageSize'));
+        $this->assertEquals($expectedPageSize->getWidth(), $fpdf->getParam('w'));
+        $this->assertEquals($expectedPageSize->getHeight(), $fpdf->getParam('h'));
+        $this->assertEquals($expectedPageSize->getWidthAsPt(), $fpdf->getParam('wPt'));
+        $this->assertEquals($expectedPageSize->getHeightAsPt(), $fpdf->getParam('hPt'));
+        $this->assertEquals($expectedPageSize->getHeight() - $expectedPageSize->getMarginBottom(), $fpdf->getParam('PageBreakTrigger'));
+
+        $fpdf = new TestableFpdf('P', PdfFormatEnum::UNIT_MM, 'letter');
+        $expectedPageSize = new PageSize('P', PdfFormatEnum::UNIT_MM, 'letter');
+        $this->assertEquals($expectedPageSize->getPageSize(), $fpdf->getParam('DefPageSize'));
+        $this->assertEquals($expectedPageSize->getPageSize(), $fpdf->getParam('CurPageSize'));
+        $this->assertEquals($expectedPageSize->getWidth(), $fpdf->getParam('w'));
+        $this->assertEquals($expectedPageSize->getHeight(), $fpdf->getParam('h'));
+        $this->assertEquals($expectedPageSize->getWidthAsPt(), $fpdf->getParam('wPt'));
+        $this->assertEquals($expectedPageSize->getHeightAsPt(), $fpdf->getParam('hPt'));
+        $this->assertEquals($expectedPageSize->getHeight() - $expectedPageSize->getMarginBottom(), $fpdf->getParam('PageBreakTrigger'));
+
+        $fpdf = new TestableFpdf('P', PdfFormatEnum::UNIT_MM, 'legal');
+        $expectedPageSize = new PageSize('P', PdfFormatEnum::UNIT_MM, 'legal');
+        $this->assertEquals($expectedPageSize->getPageSize(), $fpdf->getParam('DefPageSize'));
+        $this->assertEquals($expectedPageSize->getPageSize(), $fpdf->getParam('CurPageSize'));
+        $this->assertEquals($expectedPageSize->getWidth(), $fpdf->getParam('w'));
+        $this->assertEquals($expectedPageSize->getHeight(), $fpdf->getParam('h'));
         $this->assertEquals($expectedPageSize->getWidthAsPt(), $fpdf->getParam('wPt'));
         $this->assertEquals($expectedPageSize->getHeightAsPt(), $fpdf->getParam('hPt'));
         $this->assertEquals($expectedPageSize->getHeight() - $expectedPageSize->getMarginBottom(), $fpdf->getParam('PageBreakTrigger'));
