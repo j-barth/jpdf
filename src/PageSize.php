@@ -56,7 +56,6 @@ class PageSize
             $a = $stdPageSizes[$size];
             $size = [$a[0] / $this->_k, $a[1] / $this->_k];
         }
-        $this->_pageSize = $size;
 
         // Page orientation
         $orientation = strtolower($orientation);
@@ -130,13 +129,6 @@ class PageSize
     public function setK(float $k): void
     {
         $this->_k = $k;
-    }
-
-
-    /** @param float[] $pageSize */
-    public function setPageSize(array $pageSize): void
-    {
-        $this->_pageSize = $pageSize;
     }
 
     public function getOrientation(): string

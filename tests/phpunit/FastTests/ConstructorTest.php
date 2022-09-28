@@ -1,11 +1,12 @@
 <?php
-namespace Tests;
+namespace FastTests;
 
+use CoreTests\TestableFpdf;
 use Jbarth\PageSize;
 use Jbarth\PdfFormatEnum;
 use PHPUnit\Framework\TestCase;
 
-class ContructorTest extends TestCase
+class ConstructorTest extends TestCase
 {
 
     public function testConstructorDefault()
@@ -38,8 +39,6 @@ class ContructorTest extends TestCase
         $this->assertEquals('0 g', $fpdf->getParam('TextColor'));
         $this->assertEquals('0', $fpdf->getParam('ws'));
         $this->assertTrue(is_dir($fpdf->getParam('fontpath')), 'Font path is correctly defined');
-        $fontPath = str_replace('tests/phpunit/Fpdf', 'src/font/', dirname(__FILE__));
-        $this->assertEquals($fontPath, $fpdf->getParam('fontpath'));
 
         $expectedCoreFonts = ['courier', 'helvetica', 'times', 'symbol', 'zapfdingbats'];
         $actualCoreFonts = $fpdf->getParam('CoreFonts');
