@@ -1,30 +1,31 @@
 {
-  "name": "jbarth/jpdf",
-  "homepage": "http://www.fpdf.org",
-  "description": "This project is based on FPDF. The goal here is to create an easily usable library with composer from this base.",
-  "autoload": {
-    "psr-4": {
-      "Jbarth\\": "/src"
+    "name": "jbarth/jpdf",
+    "homepage": "http://www.fpdf.org",
+    "description": "This project is based on FPDF. The goal here is to create an easily usable library with composer from this base.",
+    "autoload": {
+        "psr-4": {
+            "Jbarth\\": "/src"
+        }
+    },
+    "type": "library",
+    "keywords": [
+        "pdf",
+        "fpdf",
+        "jpdf"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jerome Barthes",
+            "email": "jerome.barthes@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.2",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^1.8",
+        "phpunit/phpunit": "8.5"
     }
-  },
-  "type": "library",
-  "keywords": [
-    "pdf",
-    "fpdf",
-    "jpdf"
-  ],
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Jerome Barthes",
-      "email": "jerome.barthes@gmail.com"
-    }
-  ],
-  "require": {
-        "php": "^7.2"
-  },
-  "require-dev": {
-    "phpstan/phpstan": "^1.8",
-    "phpunit/phpunit": "8.5"
-  }
 }

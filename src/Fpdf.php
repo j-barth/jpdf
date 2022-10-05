@@ -533,7 +533,10 @@ class Fpdf
             $this->FontFiles[$file] = array('type' => "TTF");
             unset($cw);
         } else {
-            $info = $this->_loadfont($file);
+
+
+                $fontDef = FontDefinition::getFontDefinition(strtolower($fontkey));
+                $info = $fontDef->asArray();
             $info['i'] = count($this->fonts) + 1;
             if (!empty($info['file'])) {
                 // Embedded font
@@ -1258,22 +1261,6 @@ class Fpdf
     protected function _endpage()
     {
         $this->state = 1;
-    }
-
-    protected function _loadfont($font)
-    {
-        // Load a font definition file from the font directory
-        if (strpos($font, '/') !== false || strpos($font, "\\") !== false)
-            $this->Error('Incorrect font definition file name: ' . $font);
-        include($this->fontpath . $font);
-
-        if (!isset($name))   // @phpstan-ignore-line
-            $this->Error('Could not include font definition file');
-        if (isset($enc))            // @phpstan-ignore-line
-            $enc = strtolower($enc);   // @phpstan-ignore-line
-        if (!isset($subsetted))   // @phpstan-ignore-line
-            $subsetted = false;
-        return get_defined_vars();
     }
 
     protected function _isascii($s)
